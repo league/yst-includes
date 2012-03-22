@@ -1,0 +1,3 @@
+- url: readme.html
+  template: readme.st
+  requires: filter.hs
