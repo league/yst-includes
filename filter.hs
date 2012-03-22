@@ -5,44 +5,66 @@ import Web.Encodings (encodeHtml)
 
 main = toJsonFilter processBlock
 
+data Args =
+  Args { includeFile :: Maybe String
+       , firstLine   :: Maybe Int
+       , lastLine    :: Maybe Int
+       , beginMarker :: Maybe String
+       , endMarker   :: Maybe String
+       , promptRegex :: Maybe String
+       }
+
+defaultArgs :: Args
+defaultArgs = Args Nothing Nothing Nothing Nothing Nothing Nothing
+
+processArgs :: [(String,String)] -> (Args, [(String,String)])
+processArgs [] = (defaultArgs, [])
+processArgs ((k,v):kvs) = case k of
+    "include" -> (arg {includeFile = Just v}, rest)
+    "first"   -> (arg {firstLine   = Just $ read v}, rest)
+    "last"    -> (arg {lastLine    = Just $ read v}, rest)
+    "begin"   -> (arg {beginMarker = Just v}, rest)
+    "end"     -> (arg {endMarker   = Just v}, rest)
+    "prompt"  -> (arg {promptRegex = Just v}, rest)
+    _         -> (arg, (k,v):rest)
+  where
+    (arg, rest) = processArgs kvs
+
 processBlock :: Block -> IO Block
-processBlock (cb@(CodeBlock (i,cs,kvs) body)) =
-  case lookup "include" kvs of
-    Just f -> readFile f >>= return . CodeBlock (i,cs,kvs) . rewrite kvs
+processBlock (cb@(CodeBlock (i,cs,kvs) body)) = do
+  let (args, kvs') = processArgs kvs
+  body' <- maybe (return body) readFile (includeFile args)
+  let ls = rewrite args $ lines body'
+  let k = chop . unlines
+  case promptRegex args of
+    Just regex ->
+      return $ promptBlock $ k $ map (highlightCmd regex . encodeHtml) ls
     Nothing ->
-      case lookup "prompt" kvs of
-        Just regex -> return $ RawBlock "html" $ "<pre class=\"sourceCode\">" ++ (asLines (map $ highlightCmd regex) (encodeHtml body)) ++ "</pre>\n"
-        Nothing -> return cb
+      return $ CodeBlock (i,cs,kvs') $ k ls
 processBlock b = return b
+
+promptBlock :: String -> Block
+promptBlock body =
+  RawBlock "html" $ "<pre class=\"sourceCode\">" ++ body ++ "</pre>\n"
 
 asLines :: ([String] -> [String]) -> String -> String
 asLines f = unlines . f . lines
 
-rewrite :: [(String,String)] -> String -> String
-rewrite kvs = chop . asLines (doMarkers . doFirst . doLast)
+rewrite :: Args -> [String] -> [String]
+rewrite args = doMarkers . doFirst . doLast
   where
-    doMarkers = maybeMarkers kvs
-    doLast = maybeLinesF "last" (take . read) kvs
-    doFirst = maybeLinesF "first" (dropMinus1 . read) kvs
-    dropMinus1 n = drop (n-1)
+    doLast = maybe id take $ lastLine args
+    doFirst = maybe id (drop . flip (-) 1) $ firstLine args
+    doMarkers = maybeMarkers (beginMarker args) (endMarker args)
 
-maybeLinesF :: String -> (String -> [String] -> [String])
-    -> [(String,String)] -> [String] -> [String]
-maybeLinesF key f kvs xs =
-  case lookup key kvs of
-    Just v -> f v xs
-    Nothing -> xs
-
-maybeMarkers kvs xs =
-  case (lookup "begin" kvs, lookup "end" kvs) of
-    (Nothing, Nothing) -> xs
-    (Just b, Nothing) -> tail $ dropWhile (not . isInfixOf b) xs
-    (Nothing, Just e) -> takeWhile (not . isInfixOf e) xs
-    (Just b, Just e) -> dropp xs
-      where dropp [] = []
-            dropp (x:xs) = if isInfixOf b x then takke xs else dropp xs
-            takke [] = []
-            takke (x:xs) = if isInfixOf e x then dropp xs else x : takke xs
+maybeMarkers Nothing Nothing xs = xs
+maybeMarkers (Just b) Nothing xs = tail $ dropWhile (not . isInfixOf b) xs
+maybeMarkers Nothing (Just e) xs = takeWhile (not . isInfixOf e) xs
+maybeMarkers (Just b) (Just e) xs = dropp xs
+  where dropp [] = []
+        dropp (x:xs) = if isInfixOf b x then takke xs else dropp xs
+        takke [] = []
+        takke (x:xs) = if isInfixOf e x then dropp xs else x : takke xs
 
 chop :: String -> String
 chop s =
