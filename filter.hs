@@ -28,7 +28,7 @@ maybeLinesF key f kvs xs =
 maybeMarkers kvs xs =
   case (lookup "begin" kvs, lookup "end" kvs) of
     (Nothing, Nothing) -> xs
-    (Just b, Nothing) -> dropWhile (not . isInfixOf b) xs
+    (Just b, Nothing) -> tail $ dropWhile (not . isInfixOf b) xs
     (Nothing, Just e) -> takeWhile (not . isInfixOf e) xs
     (Just b, Just e) -> dropp xs
       where dropp [] = []
