@@ -6,3 +6,12 @@ We can select by markers in the code.
   printf("OK\n");
   return 3.14;
 ~~~~
+
+Testing begin only
+
+~~~~ {include="marker1.c" begin="--{CUT}--"}
+int main() {
+  printf("Foo!\n");
+  return 0;
+}
+~~~~
