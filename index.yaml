@@ -5,3 +5,6 @@
   template: minimal.st
   requires: [minimal.py, filter.hs]
   layout: layout.txt.st
+- url: indented.html
+  template: indented.st
+  requires: [indented.py, filter.hs]
