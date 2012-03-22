@@ -1,6 +1,6 @@
 We can select by markers in the code.
 
-~~~~ {include="selectlines.c" begin="// BEGIN" end="// END"}
+~~~~
   int y = x + 2;
   printf("%d %d\n", x, y);
   printf("OK\n");
@@ -9,7 +9,7 @@ We can select by markers in the code.
 
 Testing begin only
 
-~~~~ {include="marker1.c" begin="--{CUT}--"}
+~~~~
 int main() {
   printf("Foo!\n");
   return 0;
@@ -18,7 +18,7 @@ int main() {
 
 Testing end only.
 
-~~~~ {include="marker2.c" end="..STOP.."}
+~~~~
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
