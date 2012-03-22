@@ -1,0 +1,10 @@
+We can select certain lines only.
+
+~~~~ {include="selectlines.c" firstline="5" lastline="10"}
+  printf("Hello, world.\n");
+  if(rand()%2 == 0) {
+    printf("Yes\n");
+  } else {
+    printf("No\n");
+  }
+~~~~

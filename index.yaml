@@ -11,3 +11,7 @@
 - url: backslash.html
   template: backslash.st
   requires: [backslash.py, filter.hs]
+- url: selectlines.txt
+  template: selectlines.st
+  requires: [selectlines.c, filter.hs]
+  layout: layout.txt.st
