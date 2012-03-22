@@ -7,5 +7,7 @@
     This pertains to previous list item.
     ~~~~
 
+    A second paragraph of item 2.
+
 1. The third list item.
 
