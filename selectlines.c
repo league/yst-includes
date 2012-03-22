@@ -18,3 +18,11 @@ void frob(int x)
   printf("%d %d\n", x, y);
   // END
 }
+
+float grab()
+{
+  // BEGIN EXAMPLE
+  printf("OK\n");
+  return 3.14;
+  // END
+}
