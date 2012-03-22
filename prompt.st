@@ -1,7 +1,7 @@
 
 Highlight prompts and shell commands.
 
-~~~~ {prompt="liucs:.*\$"}
+~~~~ {prompt="liucs:.*\\\$"}
 liucs:~/cs643\$ cd a4/build
 liucs:~/cs643/a4/build\$ make
 [...]
