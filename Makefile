@@ -8,4 +8,4 @@ correct:
 	rsync -av site/ expected
 
 clean:
-	$(RM) -r site/
+	$(RM) -r site/ expected/*~ *~
