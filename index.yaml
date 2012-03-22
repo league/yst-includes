@@ -3,5 +3,5 @@
   requires: filter.hs
 - url: minimal.txt
   template: minimal.st
-  requires: minimal.py
+  requires: [minimal.py, filter.hs]
   layout: layout.txt.st
