@@ -10,3 +10,11 @@ int main()
   }
   return 0;
 }
+
+void frob(int x)
+{
+  // BEGIN EXAMPLE
+  int y = x + 2;
+  printf("%d %d\n", x, y);
+  // END
+}

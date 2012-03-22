@@ -1,0 +1,6 @@
+We can select by markers in the code.
+
+~~~~ {include="selectlines.c" begin="// BEGIN" end="// END"}
+  int y = x + 2;
+  printf("%d %d\n", x, y);
+~~~~

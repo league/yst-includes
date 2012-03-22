@@ -15,3 +15,7 @@
   template: selectlines.st
   requires: [selectlines.c, filter.hs]
   layout: layout.txt.st
+- url: markers.txt
+  template: markers.st
+  requires: [selectlines.c, filter.hs]
+  layout: layout.txt.st
