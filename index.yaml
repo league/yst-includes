@@ -8,3 +8,6 @@
 - url: indented.html
   template: indented.st
   requires: [indented.py, filter.hs]
+- url: backslash.html
+  template: backslash.st
+  requires: [backslash.py, filter.hs]
