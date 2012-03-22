@@ -9,3 +9,7 @@ Testing begin only
 ~~~~ {include="marker1.c" begin="--{CUT}--"}
 ~~~~
 
+Testing end only.
+
+~~~~ {include="marker2.c" end="..STOP.."}
+~~~~
