@@ -19,3 +19,6 @@
   template: markers.st
   requires: [selectlines.c, filter.hs]
   layout: layout.txt.st
+- url: prompt.html
+  template: prompt.st
+  requires: filter.hs
