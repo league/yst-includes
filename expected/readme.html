@@ -1,1 +1,7 @@
-<p>hello</p>
+<h1 id="yst-includes">yst-includes</h1>
+<p>This is a Haskell program and a test suite for including code blocks from external files in <a href="http://github.com/jgm/yst/">yst</a> web sites. It requires a version of yst that supports the <code>filter</code> directive in its <code>config.yaml</code>:</p>
+<pre><code>filter: runhaskell filter.hs</code></pre>
+<p>Its simplest usage is like this:</p>
+<pre><code>~~~~ {.python include=&quot;hello.py&quot;}
+This will be replaced by content of hello.py.
+~~~~</code></pre>
