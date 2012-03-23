@@ -11,8 +11,6 @@ filter: runhaskell filter.hs
 
 Its simplest usage is like this:
 
-~~~~~~
-~~~~ {.python include="hello.py"}
-This will be replaced by content of hello.py.
-~~~~
-~~~~~~
+    ~~~~ {.python include="hello.py"}
+    This will be replaced by content of hello.py.
+    ~~~~
