@@ -1,5 +1,5 @@
 - url: readme.html
-  template: readme.st
+  source: readme.markdown
   requires: filter.hs
 - url: minimal.txt
   template: minimal.st
