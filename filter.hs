@@ -47,9 +47,6 @@ promptBlock :: String -> Block
 promptBlock body =
   RawBlock "html" $ "<pre class=\"sourceCode\">" ++ body ++ "</pre>\n"
 
-asLines :: ([String] -> [String]) -> String -> String
-asLines f = unlines . f . lines
-
 rewrite :: Args -> [String] -> [String]
 rewrite args = doMarkers . doFirst . doLast
   where
