@@ -10,3 +10,42 @@
 <pre><code>~~~~ {.python include=&quot;hello.py&quot;}
 This will be replaced by content of hello.py.
 ~~~~</code></pre>
+<p>But it also supports some other parameters, such as <code>first</code> and <code>last</code> to specify a range of lines.</p>
+<pre><code>~~~~ {.c include=&quot;hello.c&quot; first=&quot;5&quot; last=&quot;10&quot;}
+~~~~</code></pre>
+<p>Or, you can use <code>begin</code> and <code>end</code> to specify strings that will turn on (and off, respectively) inclusion of lines from the file. For example, if <code>frob.c</code> contains:</p>
+<pre><code>void frob(int x)
+{
+  // BEGIN EXAMPLE
+  int y = x + 2;
+  printf(&quot;%d %d\n&quot;, x, y);
+  // END
+}
+
+float grab()
+{
+  // BEGIN EXAMPLE
+  printf(&quot;OK\n&quot;);
+  return 3.14;
+  // END
+}</code></pre>
+<p>Then the following code block:</p>
+<pre><code>~~~~ {.c include=&quot;frob.c&quot; begin=&quot;// BEGIN&quot; end=&quot;// END&quot;}
+~~~~</code></pre>
+<p>will produce:</p>
+<pre><code>  int y = x + 2;
+  printf(&quot;%d %d\n&quot;, x, y);
+  printf(&quot;OK\n&quot;);
+  return 3.14;</code></pre>
+<p>Finally, we support a parameter <code>prompt</code> that specifies a regular expression meant to help with highlighting command-line interfaces. The text that matches the regular expression is highlighted with <code>span class=&quot;prompt&quot;</code> and the rest of that line is highlighted with <code>span class=&quot;cmd&quot;</code>. For example:</p>
+<pre><code>~~~~ {prompt=&quot;liucs:.*\\\$&quot;}
+liucs:~/cs643\$ cd a4/build
+liucs:~/cs643/a4/build\$ make
+[...]
+32 bytes (32 B) copied, 0.000254176 s, 126 kB/s
+cat vdi-header-2 &gt;&gt;vdi-header
+cat vdi-header diskc.img &gt;diskc.vdi
+cp diskc.vdi /mnt/host
+rm libc/entry.o
+liucs:~/cs643/a4/build\$
+~~~~</code></pre>
